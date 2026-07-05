@@ -1,0 +1,9 @@
+# Environments
+.venv/
+
+# Testing files
+test1.py
+test2.py
+Dev.txt
+# MacOS junk files (always good to add if you're on a Mac!)
+.DS_Store

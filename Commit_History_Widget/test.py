@@ -1,9 +1,8 @@
 """
- Monthly Commit History
-
- This file handles the networking side of the widget.
-This file uses Python's 'Requests Library', whyich acts as HTTP client & interact with REST APIs
-Requests in this case inteacts with 'GitHub REST API (Search endpoint)'
+ Monthly Commit History:
+    This file handles the networking side of the widget.
+    This file uses Python's 'Requests Library', whyich acts as HTTP client & interact with REST APIs
+    Requests in this case inteacts with 'GitHub REST API (Search endpoint)'
 """
 from datetime import datetime, timezone, timedelta
 import requests
@@ -12,7 +11,9 @@ def fetch_30_day_commits(username: str) -> int:
     # 1. Calculate the sliding window date boundary
     today = datetime.now(timezone.utc)
     thirty_days_ago = today - timedelta(days=30)
-    date_str = thirty_days_ago.strftime('%d-%m-%Y') # Format: DD-MM-YYYY
+    date_str = thirty_days_ago.strftime('%Y-%m-%d') # Format: YYYY-MM-DD
+    # ISO 8601 standard for dates: YYYY-MM-DD
+    # Why ISO 8601: Efficient & accurate date sorting
 
     # 2. Build the Search API Query
     # q=author:username filters by you
