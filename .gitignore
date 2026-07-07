@@ -1,9 +1,14 @@
 # Environments
 .venv/
-
+.env
 # Testing files
 test1.py
 test2.py
-Dev.txt
+test3.py
+test4.py
+test5.py
+networkV1.py
+Dev.md
 # MacOS junk files (always good to add if you're on a Mac!)
 .DS_Store
+__pycache__/
