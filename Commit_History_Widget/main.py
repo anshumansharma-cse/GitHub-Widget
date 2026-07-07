@@ -1,9 +1,14 @@
+"""
+Orchestration File:
+Uses 'tkinter' for creation of Widget UI
+This files utilises the networking principles established  in network_final & is responsible for showing floating widget on computer screen
+"""
 import tkinter as tk
 from datetime import datetime, timedelta
 from network_final import GitCommitEngine
 
 # --- CONFIGURATION ---
-# ⛔️ Change the place holder, Please !!
+# ⛔️ Change the place holder, Please 😌 !!
 GITHUB_USERNAME = "<Enter your own GitHub UserName>"
 REFRESH_DELAY = 600000 # 10 minutes
 WIDGET_POSITION = "180x100+1200+60"
