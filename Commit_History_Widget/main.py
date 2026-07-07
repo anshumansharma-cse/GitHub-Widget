@@ -3,20 +3,27 @@ Orchestration File:
 Uses 'tkinter' for creation of Widget UI
 This files utilises the networking principles established  in network_final & is responsible for showing floating widget on computer screen
 """
+import os
 import tkinter as tk
 from datetime import datetime, timedelta
+import token
+from dotenv import load_dotenv # Imports python-dotenv
 from network_final import GitCommitEngine
+
+load_dotenv()
 
 # --- CONFIGURATION ---
 # ⛔️ Change the place holder, Please 😌 !!
 GITHUB_USERNAME = "<Enter your own GitHub UserName>"
+# Read PersonalAccessToken(PAT) from .env- maintains privacy
+GITHUB_TOKEN = os.getenv("GITHUB_PAT")
 REFRESH_DELAY = 600000 # 10 minutes
 WIDGET_POSITION = "180x100+1200+60"
 
 class GitDesktopWidget:
     def __init__(self):
         # Instantiate the brains
-        self.engine = GitCommitEngine(username=GITHUB_USERNAME)
+        self.engine = GitCommitEngine(username=GITHUB_USERNAME, token = GITHUB_TOKEN)
 
         self.root = tk.Tk()
 

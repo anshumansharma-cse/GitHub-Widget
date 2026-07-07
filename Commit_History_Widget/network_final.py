@@ -14,9 +14,11 @@ from datetime import datetime, timezone, timedelta
 
 # 1. Why class: Allows to hold state (session)
 class GitCommitEngine:
-    def __init__(self, username: str):
+
+    def __init__(self, username: str, token: str |  None = None): # Private Access Token is optional!
          # By initializing here, the TCP connection stays open permanently!
         self.username = username
+        self.token = token
         self.session = self._create_resilient_session()
 
     def _create_resilient_session(self) -> requests.Session:
@@ -44,15 +46,25 @@ class GitCommitEngine:
         thirty_days_ago = today - timedelta(days=30)
         date_str = thirty_days_ago.strftime('%Y-%m-%d')
 
-        url = f"https://api.github.com/search/commits?q=author:{self.username}+committer-date:>={date_str}"
+        # Base URL
+        url = "https://api.github.com/search/commits"
+        
+        # 'Params' Dictionary- helps in HTTP encoding
+        query_params = {
+        "q": f"author:{self.username} committer-date:>={date_str}"
+        }
+
         headers = {
             'User-Agent': 'GitCommitEngine30Day',
-            'Accept': 'application/vnd.github+json'
+            'Accept': 'application/vnd.github+json',
         }
+        if self.token:
+            # Private Repo Commit History Access (optional)
+            headers ['Authorization'] = f'Bearer {self.token}'
 
         try:
             # (3.05s to establish connection, 10s max to download payload)
-            response = self.session.get(url, headers=headers, timeout=(3.05, 10))
+            response = self.session.get(url, params= query_params, headers=headers, timeout=(3.05, 10))
             # Instantly throws an exception if status is 4xx or 5xx (bypassing the need for manual if/else checks)
             response.raise_for_status()
 
